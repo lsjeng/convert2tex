@@ -15,7 +15,7 @@ def generate_contents(temp_fn):
             del lines[i]
             break
     
-    return "\n".join(lines) 
+    return "\n".join(lines).decode('UTF-8') 
 
 def extract_contents_from_pdb(fn, out_fn):
     f = open(fn, 'rb')

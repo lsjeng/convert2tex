@@ -116,15 +116,16 @@ def convert_file(fn, s2t, vertial_writing_convert):
     xelatex_header_template = string.Template(XELATEX_HEADER)
 
     if content:
-        # convert Simple Chinese to Tradional Chinese
-        if s2t == True:
-            print TRANSLATE_MESSAGE + fn
-            content = simple_chinese_2_tradtional_chinese(content)
+        if not fn.endswith('pdb')
+            # convert Simple Chinese to Tradional Chinese
+            if s2t == True and:
+                print TRANSLATE_MESSAGE + fn
+                content = simple_chinese_2_tradtional_chinese(content)
 
-        # convert symbol to support vertial writing
-        if vertial_writing_convert == True:
-            print CONVERT_VERTIAL_SYMBOL_MESSAGE + fn
-            content =  convert_vertial_symbol(content) 
+            # convert symbol to support vertial writing
+            if vertial_writing_convert == True:
+                print CONVERT_VERTIAL_SYMBOL_MESSAGE + fn
+                content =  convert_vertial_symbol(content) 
 
         # add xelatex header and footer
         print YIELD_TEX_FILE_MESSAGE + fn[:fn.rfind('.')]  + ".tex"
@@ -132,9 +133,10 @@ def convert_file(fn, s2t, vertial_writing_convert):
         vfa = VERTICAL_FONT_ATTRIBUTE if vertial_writing_convert else ""
         content = add_xelatex_header_footer(
                     content, 
-                    xelatex_header_template.substitute(font_name=FONT_NAME,
-                                                       vertical_page_attribute=vpa,
-                                                       vertical_font_attribute=vfa),
+                    xelatex_header_template.substitute(
+                        font_name=FONT_NAME,
+                        vertical_page_attribute=vpa,
+                        vertical_font_attribute=vfa),
                     XELATEX_FOOTER)
         
         # write to file
