@@ -1,7 +1,6 @@
 #-*- coding: utf8 -*-
 
-def dic_tw():
-	return {
+TRANSLATE_MAP={
 u"麽":u"麼",
 u"啰":u"囉",
 u"註意":u"注意",
@@ -1418,4 +1417,7 @@ u"邁克爾":u"麥克",
 u"小醜":u"小丑",
 u"豆腐幹":u"豆腐干",
 u"畢加索":u"畢卡索"
-};
+}
+
+def dic_tw():
+    return TRANSLATE_MAP

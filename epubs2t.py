@@ -5,6 +5,29 @@ import sys
 import zipfile
 import s2c 
 
+def convert_epub_sc2tc(input_fn, output_fn):
+    
+    # read epub file and convert
+    input_fh = zipfile.ZipFile(input_fn, "r")
+    fn_list_sc = [fn for fn in input_fh.namelist() if any(fn.endswith(x) for x in ['html', 'htm', 'ncx', 'opf'])]
+    fn_list_bin = list(set(input_fh.namelist()).difference(fn_list_sc)) 
+
+    content_list_tc = [s2c.convert_UTF8_content(input_fh.read(fn)).replace('zh-CN', 'zh-TW') for fn in fn_list_sc]
+    content_list_bin = [input_fh.read(fn) for fn in fn_list_bin]
+
+    input_fh.close()
+
+    # write epub file
+    out_fh = zipfile.ZipFile(output_fn, "w")
+    for fn, content in zip(fn_list_sc, content_list_tc):
+        out_fh.writestr(fn, content.encode('UTF-8'))
+    for fn, content in zip(fn_list_bin, content_list_bin):
+        out_fh.writestr(fn, content)
+    
+    out_fh.close()
+
+
+
 def main():
     epub_fn_list = []
     if len(sys.argv) != 2:
@@ -12,24 +35,10 @@ def main():
     else:
         epub_fn_list = sys.argv[1:]
 
-    for fh in epub_fn_list:
-        fh = zipfile.ZipFile(sys.argv[1], "r")
-        fn_list = [fn for fn in fh.namelist() if fn.endswith('html') or fn.endswith('htm')]
-        fn_list_2 = [fn for fn in fh.namelist() if not fn.endswith('html') and not fn.endswith('htm')] 
+    for epub_fn in epub_fn_list:
+        if epub_fn.endswith('.epub'):
+            convert_epub_sc2tc(epub_fn, epub_fn[:-5] + "_tc.epub")
 
-        content_list = [s2c.convert_UTF8_content(fh.read(fn)).replace('zh-CN', 'zh-TW') for fn in fn_list]
-        content_list_2 = [fh.read(fn) for fn in fn_list_2]
-
-        fh.close()
-
-        fh = zipfile.ZipFile(sys.argv[1], "w")
-        for fn, content in zip(fn_list, content_list):
-            fh.writestr(fn, content.encode('UTF-8'))
-
-        for fn, content in zip(fn_list_2, content_list_2):
-            fh.writestr(fn, content)
-
-        fh.close()
 
 if __name__ == "__main__":
     main()
