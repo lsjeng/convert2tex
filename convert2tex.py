@@ -116,14 +116,14 @@ def convert_file(fn, s2t, vertial_writing_convert):
     xelatex_header_template = string.Template(XELATEX_HEADER)
 
     if content:
-        if not fn.endswith('pdb')
+        if not fn.endswith('pdb'):
             # convert Simple Chinese to Tradional Chinese
-            if s2t == True and:
+            if s2t:
                 print TRANSLATE_MESSAGE + fn
                 content = simple_chinese_2_tradtional_chinese(content)
 
             # convert symbol to support vertial writing
-            if vertial_writing_convert == True:
+            if vertial_writing_convert:
                 print CONVERT_VERTIAL_SYMBOL_MESSAGE + fn
                 content =  convert_vertial_symbol(content) 
 
