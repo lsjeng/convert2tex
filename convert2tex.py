@@ -4,6 +4,7 @@
 import sys
 import getopt
 import subprocess
+import string
 
 from epub import extract_content_from_epub 
 from s2c import convert_UTF8_content 
@@ -29,12 +30,12 @@ HELP_MESSAGE = """convert2tex.py -h -w -l -f font_name filename
 XELATEX_HEADER="""%!TEX TS-program = xelatex
 %!TEX encoding = UTF-8 Unicode
 
-\documentclass[12pt, fleqn, {vertical_page_attribute}]{article}
+\documentclass[12pt, fleqn, $vertical_page_attribute]{article}
 \usepackage[b5paper, left=2.5cm, right=2.5cm, top=2.5cm, bottom=3.5cm]{geometry}
 
 \usepackage{fontspec}
 \usepackage{xeCJK}
-\setCJKmainfont[{vertical_font_attribute}]{{font_name}}
+\setCJKmainfont[$vertical_font_attribute]{$font_name}
 \usepackage{parskip}
 \setlength{\parskip}{.2cm}
 
@@ -96,7 +97,9 @@ def convert_vertial_symbol(content):
                   u"…": u" $\cdots$ ",
                   u"_": u"\_",
                   u'　': u'  ',
-                  u'——': u' --- '}
+                  u'——': u' --- ',
+                  u'?': u'？',
+                  u'!': u'！'}
 
     for k, v in symbol_map.items():
         content = content.replace(k, v)
@@ -110,6 +113,7 @@ def convert_file(fn, s2t, vertial_writing_convert):
     # get text content
     print GET_CONTENT_MESSAGE + fn 
     content = get_content(fn)
+    xelatex_header_template = string.Template(XELATEX_HEADER)
 
     if content:
         # convert Simple Chinese to Tradional Chinese
@@ -126,11 +130,12 @@ def convert_file(fn, s2t, vertial_writing_convert):
         print YIELD_TEX_FILE_MESSAGE + fn[:fn.rfind('.')]  + ".tex"
         vpa = VERTICAL_PAGE_ATTRIBUTE if vertial_writing_convert else ""
         vfa = VERTICAL_FONT_ATTRIBUTE if vertial_writing_convert else ""
-        content = add_xelatex_header_footer(content, 
-                                            XELATEX_HEADER.format(font_name=FONT_NAME,
-                                                                  vertical_page_attribute=vpa,
-                                                                  vertical_font_attribute=vfa),
-                                            XELATEX_FOOTER)
+        content = add_xelatex_header_footer(
+                    content, 
+                    xelatex_header_template.substitute(font_name=FONT_NAME,
+                                                       vertical_page_attribute=vpa,
+                                                       vertical_font_attribute=vfa),
+                    XELATEX_FOOTER)
         
         # write to file
         f = open(fn[:fn.rfind('.')] + ".tex", "w")
