@@ -30,13 +30,14 @@ def convert_epub_sc2tc(input_fn, output_fn):
 
 def main():
     epub_fn_list = []
-    if len(sys.argv) != 2:
+    if len(sys.argv) < 2:
         print "epubs2c.py sample.epub"
     else:
         epub_fn_list = sys.argv[1:]
 
     for epub_fn in epub_fn_list:
         if epub_fn.endswith('.epub'):
+            print "Convert " + epub_fn + " to " + epub_fn[:-5] + "_tc.epub"
             convert_epub_sc2tc(epub_fn, epub_fn[:-5] + "_tc.epub")
 
 
