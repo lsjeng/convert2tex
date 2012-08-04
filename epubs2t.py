@@ -37,8 +37,8 @@ def main():
 
     for epub_fn in epub_fn_list:
         if epub_fn.endswith('.epub'):
-            print "Convert " + epub_fn + " to " + epub_fn[:-5] + "_tc.epub"
             convert_epub_sc2tc(epub_fn, epub_fn[:-5] + "_tc.epub")
+            print "Convert " + epub_fn + " to " + epub_fn[:-5] + "_tc.epub Sucessfully."
 
 
 if __name__ == "__main__":
