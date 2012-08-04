@@ -17,12 +17,14 @@ Convert pdb/epub/txt to tex file and from Simple Chinese to Traditional Chinese
 
 ## 安裝
 
-1. 安裝 python-jianfan 套件
+1. 安裝 [python-jianfan](http://code.google.com/p/python-jianfan/) 套件
 
         pip install jianfan
 
 2. 將 `*.py` 檔下載下來後複製到可執行路徑下，即可使用。
 
+        git clone https://github.com/yen3/convert2tex.git
+        cd convert2tex
         cp *.py /usr/local/bin
 
 ## 使用
