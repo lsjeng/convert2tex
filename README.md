@@ -39,4 +39,6 @@ Convert pdb/epub/txt to tex file and from Simple Chinese to Traditional Chinese
 
 ## 感謝
 
-這隻程式的簡繁互換是使用 [鳥毅的Blog: 完美簡繁轉換](http://blog.tenyi.com/2011/08/blog-post.html) 進行修改，在此感謝。
+* 簡繁互換的字典檔是使用新同文堂[技術資料](http://tongwen.openfoundry.org/technical_zh-tw.htm): [word_s2t.txt](http://tongwen.openfoundry.org/src/tongwen_table/word_s2t.txt) 和 [phrase_s2t.txt](http://tongwen.openfoundry.org/src/tongwen_table/phrase_s2t.txt)，在此感謝
+
+* 程式的簡繁互換參考 [鳥毅的Blog: 完美簡繁轉換](http://blog.tenyi.com/2011/08/blog-post.html) 進行修改，在此感謝。

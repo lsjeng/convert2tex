@@ -3,7 +3,7 @@
 
 import sys
 import zipfile
-import s2c 
+import s2t 
 
 def convert_epub_sc2tc(input_fn, output_fn):
     
@@ -12,7 +12,7 @@ def convert_epub_sc2tc(input_fn, output_fn):
     fn_list_sc = [fn for fn in input_fh.namelist() if any(fn.endswith(x) for x in ['html', 'htm', 'ncx', 'opf'])]
     fn_list_bin = list(set(input_fh.namelist()).difference(fn_list_sc)) 
 
-    content_list_tc = [s2c.convert_UTF8_content(input_fh.read(fn)).replace('zh-CN', 'zh-TW') for fn in fn_list_sc]
+    content_list_tc = [s2t.convert_UTF8_content(input_fh.read(fn)).replace('zh-CN', 'zh-TW') for fn in fn_list_sc]
     content_list_bin = [input_fh.read(fn) for fn in fn_list_bin]
 
     input_fh.close()
@@ -31,7 +31,7 @@ def convert_epub_sc2tc(input_fn, output_fn):
 def main():
     epub_fn_list = []
     if len(sys.argv) < 2:
-        print "epubs2c.py sample.epub"
+        print "epubs2t.py sample.epub"
     else:
         epub_fn_list = sys.argv[1:]
 

@@ -7,7 +7,7 @@ import subprocess
 import string
 
 from epub import extract_content_from_epub 
-from s2c import convert_UTF8_content 
+from s2t import convert_UTF8_content 
 from pdb import extract_contents_from_pdb
 
 """ Font and page attribute setting"""
