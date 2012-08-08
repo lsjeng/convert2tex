@@ -1,9 +1,4 @@
 #-*- coding: utf8 -*-
-
-from jianfan import jtof
-# http://chardet.feedparser.org
-#from dic_tw import dic_tw
-
 WORD_DICTIONARY_PATH = "word_s2t.txt"
 PHASE_DICTIONARY_PATH = "phrase_s2t.txt"
 
@@ -11,11 +6,11 @@ class DictionarySingleton(object):
     _instance = None
     def __init__(self):
         f = open(WORD_DICTIONARY_PATH, 'r')
-        self.w_dict = dict([tuple(l.split(',')[0:2]) for l in f.read().split('\r\n')])
+        self.w_dict = dict([tuple(l.split(',')[0:2]) for l in f.read().decode('UTF-8').split('\r\n')])
         f.close()
 
         f = open(PHASE_DICTIONARY_PATH, 'r')
-        self.p_dict = dict([tuple(l.split(',')[0:2]) for l in f.read().split('\r\n')])
+        self.p_dict = dict([tuple(l.split(',')[0:2]) for l in f.read().decode('UTF-8').split('\r\n')])
         f.close()
 
     def __new__(cls, *args, **kwargs):
@@ -60,8 +55,7 @@ def convert_phase(string_in, dic):
 
 
 def convert_UTF8_content(content):
-    newcontent = jtof(content)
-    content_lines = [convert_word(l, TRANSLATE_DICTIONARY.word_dic()) for l in newcontent.splitlines()]
-    
-    return "\n".join([convert_phase(l, TRANSLATE_DICTIONARY.phase_dic()) for l in content_lines])
+    s2t_dicts = DictionarySingleton()
+    content_lines = [convert_word(l, s2t_dicts.word_dic()) for l in content.splitlines()]
+    return "\n".join([convert_phase(l, s2t_dicts.phase_dic()) for l in content_lines])
 
