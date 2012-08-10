@@ -56,6 +56,6 @@ def convert_phase(string_in, dic):
 
 def convert_UTF8_content(content):
     s2t_dicts = DictionarySingleton()
-    content_lines = [convert_word(l, s2t_dicts.word_dic()) for l in content.splitlines()]
+    content_lines = [convert_word(l, s2t_dicts.word_dic()) for l in content.decode('UTF-8').splitlines()]
     return "\n".join([convert_phase(l, s2t_dicts.phase_dic()) for l in content_lines])
 
