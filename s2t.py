@@ -33,29 +33,29 @@ TRANSLATE_DICTIONARY = DictionarySingleton()
 
 def convert_word(s_string, w_dic):
     t_string = s_string
-    for i in xrange(0, len(t_string)-1):
-        if t_string[i] in w_dic:
-            t_string = t_string.replace(t_string[i:i+1], w_dic[t_string[i]])
-    
+    for k, v in w_dic.items():
+        if k in t_string:
+            t_string = t_string.replace(k, v)
+
     return t_string
 
-def convert_phase(string_in, dic):
-    i=0
-    s = string_in
-    while i < len(s):
-        for j in range(len(s) - i +1, 0, -1):
-            if s[i:j] in dic:
-                t = dic[s[i:j]]
-                s = s.replace(s[i:j], t) 
-                i += len(t) -1
-                break
-        i += 1
+#def convert_phase(string_in, dic):
+    #i=0
+    #s = string_in
+    #while i < len(s):
+        #for j in range(len(s) - i +1, 0, -1):
+            #if s[i:j] in dic:
+                #t = dic[s[i:j]]
+                #s = s.replace(s[i:j], t) 
+                #i += len(t) -1
+                #break
+        #i += 1
 
-    return s 
+    #return s 
 
 
 def convert_UTF8_content(content):
     s2t_dicts = DictionarySingleton()
     content_lines = [convert_word(l, s2t_dicts.word_dic()) for l in content.decode('UTF-8').splitlines()]
-    return "\n".join([convert_phase(l, s2t_dicts.phase_dic()) for l in content_lines])
+    return "\n".join([convert_word(l, s2t_dicts.phase_dic()) for l in content_lines])
 
