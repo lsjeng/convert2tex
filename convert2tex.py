@@ -20,8 +20,9 @@ GET_CONTENT_MESSAGE = "Parse text content from epub/ pdb file: "
 TRANSLATE_MESSAGE = "Translate Simple Chinese to Tranditional Chinese: "
 CONVERT_VERTIAL_SYMBOL_MESSAGE = "Convert symbol to support vertial writing: "
 YIELD_TEX_FILE_MESSAGE = "Generate tex(xelatex) output file: "
-HELP_MESSAGE = """convert2tex.py -h -w -l -f font_name filename
+HELP_MESSAGE = """convert2tex.py -s -h -w -l -f font_name filename
 -h show the help
+-s traslate simple chinese text to tradional chinese text 
 -w horizontal writing
 -l compile the generated file with xelatex 
 -f set main font name
@@ -153,11 +154,11 @@ def main():
         print HELP_MESSAGE 
         return 
 
-    s2t = True 
+    s2t = False 
     vertial_writing_convert = True 
     xelatex_compile = False
 
-    optlist, args = getopt.getopt(sys.argv[1:], "hf:l")
+    optlist, args = getopt.getopt(sys.argv[1:], "hf:ls")
     for opt, value in optlist:
         if opt == "-h":
             print HELP_MESSAGE
@@ -168,6 +169,8 @@ def main():
             FONT_NAME = value
         if opt == "-l":
             xelatex_compile = True
+        if opt == "-s":
+            s2t = True
 
     if args:
         # get text content
